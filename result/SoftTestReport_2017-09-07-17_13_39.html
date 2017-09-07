@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>自动化测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js?_v_=1497515835475"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+window.onload=function(){
+    showCase('0') ;
+}
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 1; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+
+        if(level == 0 ){//概要
+            tr.className = 'hiddenRow'
+            document.getElementById('total_row').className = 'text-center active';            
+        }
+        if(level == 1){//失败
+            console.info(id.substr(id.length-2,id.length));
+            if ( id.substr(id.length-2,id.length) == '失败') {
+                tr.className = ''
+            }else{
+                tr.className = 'hiddenRow'
+            }  
+         }
+        if(level==2) {//通过
+              if (id.substr(0,2) == 'pt') {
+                tr.className = '';
+            }
+            else {
+                tr.className = 'hiddenRow';
+            }
+        }
+        if(level == 3 ){//所有
+            tr.className='';
+            document.getElementById('total_row').className = 'hiddenRow'; 
+        }
+        if(level == 4 ){//错误
+               console.info(id.substr(id.length-2,id.length));
+            if ( id.substr(id.length-2,id.length) == '错误') {
+                tr.className = ''
+            }else{
+                tr.className = 'hiddenRow'
+            } 
+          
+        }
+              
+    }
+
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<div   id="main" style="width: 300px;height:300px; float:right;margin-right:300px;margin-top:-80px"></div>
+<h1 style="font-family: Microsoft YaHei">自动化测试报告</h1>
+<p class='attribute'><strong>测试人员 : </strong> 梦雨</p>
+<p class='attribute'><strong>开始时间 : </strong> 2017-09-07 17:13:39</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:46.544473</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 4，通过 2，失败 2，通过率= 50.00%</p>
+
+<p class='description'>自动化测试演示报告</p>
+</div>
+
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要:{ 50.00% }</a>
+<a class="btn btn-warning" href='javascript:showCase(1)' id=''>失败:{ 2 }</a>
+<a class="btn btn-danger" href='javascript:showCase(4)'>错误:{ 0 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过:{ 2 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有:{ 4 }</a>
+<input id='fail' type="hidden" value="2"/>
+<input id='error' type="hidden" value="0"/>
+<input id='Pass' type="hidden" value="2"/>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+	<td>图片</td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>Baidu</td>
+    <td class="text-center">4</td>
+    <td class="text-center">2</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',4)" class="detail" id='c1'>Detail</a></td>
+	<td></td>
+</tr>
+
+<tr id='ft1_1_失败' class='none'>
+	<td  align='center' style="vertical-align:middle">case_0001</td>
+    <td class='failCase' style="vertical-align:middle"><div class='testcase'>test_case1: 设计预期结果与实际结果不符的case，失败case</div></td>
+    <td colspan='4' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_1'>失败</button>
+    <div id='div_ft1_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_1'>失败</button>
+    <div id='div_ft1_1' class="collapse in" style="text-align:left">
+    <pre>
+    
+ft1_1: ========【case_0001】打开百度搜索 =============
+.\result\image\2017-07-17\2017-09-07-17_13_45.png
+Traceback (most recent call last):
+  File "D:\workspace\HTMLTestRunner\Baidu.py", line 27, in test_case1
+    self.assertNotIn('百度',self.driver.title)  #断言判断测试是否成功,判断标题是否为百度(设计失败的case)
+AssertionError: '百度' unexpectedly found in '百度一下，你就知道'
+
+
+    </pre>
+    </div>
+    </td>
+	<td align='center'style="vertical-align:middle">
+    <a href="image\2017-07-17\2017-09-07-17_13_45.png" title="image\2017-07-17\2017-09-07-17_13_45.png">  
+    <img src=".\\image\\data.jpg" height=40 width=40 border=0 /></a>
+    </td>
+</tr>
+
+
+<tr id='ft1_2_失败' class='none'>
+	<td  align='center' style="vertical-align:middle">case_0002</td>
+    <td class='failCase' style="vertical-align:middle"><div class='testcase'>test_case2: 设计测试出错的case</div></td>
+    <td colspan='4' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_2'>失败</button>
+    <div id='div_ft1_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_2'>失败</button>
+    <div id='div_ft1_2' class="collapse in" style="text-align:left">
+    <pre>
+    
+ft1_2: ========【case_0002】搜索selenium =============
+.\result\image\2017-07-17\2017-09-07-17_13_59.png
+Traceback (most recent call last):
+  File "D:\workspace\HTMLTestRunner\Baidu.py", line 40, in test_case2
+    self.assertNotIn('selenium',self.driver.title)   #断言书写错误，导致case出错
+AssertionError: 'selenium' unexpectedly found in 'selenium_百度搜索'
+
+
+    </pre>
+    </div>
+    </td>
+	<td align='center'style="vertical-align:middle">
+    <a href="image\2017-07-17\2017-09-07-17_13_59.png" title="image\2017-07-17\2017-09-07-17_13_59.png">  
+    <img src=".\\image\\data.jpg" height=40 width=40 border=0 /></a>
+    </td>
+</tr>
+
+
+<tr id='pt1_3_通过' class='hiddenRow'>
+	<td  align='center' style="vertical-align:middle">case_0003</td>
+    <td class='passCase' style="vertical-align:middle"><div class='testcase'>test_case3: 设计测试测试成功的case</div></td>
+    <td colspan='4' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse in" style="text-align:left">
+    <pre>
+    
+pt1_3: ========【case_0003】 搜索梦雨情殇博客=============
+.\result\image\2017-07-17\2017-09-07-17_14_10.png
+
+
+    </pre>
+    </div>
+    </td>
+	<td align='center'style="vertical-align:middle">
+    <a href="image\2017-07-17\2017-09-07-17_14_10.png" title="image\2017-07-17\2017-09-07-17_14_10.png">  
+    <img src=".\\image\\data.jpg" height=40 width=40 border=0 /></a>
+    </td>
+</tr>
+
+
+<tr id='pt1_4_通过' class='hiddenRow'>
+	<td  align='center' style="vertical-align:middle">case_0003</td>
+    <td class='passCase' style="vertical-align:middle"><div class='testcase'>test_case3: 设计测试测试成功的case</div></td>
+    <td colspan='4' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse in" style="text-align:left">
+    <pre>
+    
+pt1_4: ========【case_0003】 搜索梦雨情殇博客=============
+.\result\image\2017-07-17\2017-09-07-17_14_22.png
+
+
+    </pre>
+    </div>
+    </td>
+	<td align='center'style="vertical-align:middle">
+    <a href="image\2017-07-17\2017-09-07-17_14_22.png" title="image\2017-07-17\2017-09-07-17_14_22.png">  
+    <img src=".\\image\\data.jpg" height=40 width=40 border=0 /></a>
+    </td>
+</tr>
+
+
+<tr id='total_row' class="text-center active">
+    <td colspan='1'>总计</td>
+    <td>4</td>
+    <td>2</td>
+    <td>2</td>
+    <td>0</td>
+    <td>通过率：50.00%</td>
+	<td></td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        var fail= document.getElementById('fail').value;
+        var error=document.getElementById('error').value;
+        var Pass=document.getElementById('Pass').value;
+
+        // 指定图表的配置项和数据
+        option = {
+            color:[ 'rgb(237,156,40)', 'rgb(217,83,79)','rgb(92,184,92)'],
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left'
+             
+            },
+            series : [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius : '50%',
+                    center: ['50%', '50%'],
+                    data:[
+                        {value:fail, name:'失败'},
+                        {value:error, name:'错误'},
+                        {value:Pass, name:'通过'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    
+
+
+</body>
+</html>
